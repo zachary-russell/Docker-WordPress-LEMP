@@ -21,3 +21,12 @@ web_fpm:
         - web_db:mysql
     volumes:
         - ./www:/var/www/html
+web_phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+        - web_db:mysql
+    ports:
+        - 8181:80
+    environment:
+        - PMA_HOST=mysql
+
