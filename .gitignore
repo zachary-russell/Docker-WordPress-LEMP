@@ -2,3 +2,4 @@ docker-entrypoint.sh
 mysql/
 www/
 logs/
+.DS_Store
