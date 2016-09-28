@@ -1,0 +1,23 @@
+web_db:
+    image: mariadb:latest
+    volumes:
+        - ./mysql:/var/lib/mysql
+    environment:
+        MYSQL_ROOT_PASSWORD: password
+web:
+    image: nginx:mainline
+    restart: always
+    ports:
+        - 80:80
+    links:
+        - web_fpm
+    volumes:
+        - ./www:/var/www/html:rw
+        - ./conf/nginx.conf:/etc/nginx/nginx.conf:ro
+        - ./logs/nginx:/var/log/nginx:rw
+web_fpm:
+    build: .
+    links:
+        - web_db:mysql
+    volumes:
+        - ./www:/var/www/html
