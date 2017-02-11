@@ -6,6 +6,8 @@ services:
         container_name: mariadb
         environment:
             MYSQL_ROOT_PASSWORD: password
+        volumes:
+            - mysql:/var/lib/mysql
     web:
         image: nginx:mainline
         container_name: nginx
@@ -30,8 +32,11 @@ services:
         container_name: phpmyadmin
         depends_on:
             - web_fpm
+            - web_db
         ports:
             - 8181:80
         environment:
             - PMA_HOST=web_db
+volumes:
+    mysql:
 
